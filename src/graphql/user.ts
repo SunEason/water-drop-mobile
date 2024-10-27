@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 
-export const getAllUser = gql`
-  query AllUser {
+export const GetUsers = gql`
+  query GetUsers {
     users {
       id
       name
@@ -11,6 +11,29 @@ export const getAllUser = gql`
       tel
       createTime
       updateTime
+    }
+  }
+`
+
+export const GetUser = gql`
+  query GetUser($id: String!) {
+    user(id: $id) {
+      id
+      name
+      password
+      account
+      desc
+      tel
+      createTime
+      updateTime
+    }
+  }
+`
+
+export const UpdateUser = gql`
+  mutation UpdateUser($id: String!, $input: UserInput!) {
+    updateUser(id: $id, input: $input) {
+      id
     }
   }
 `
