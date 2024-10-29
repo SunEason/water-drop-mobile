@@ -13,7 +13,7 @@ export default [
   pluginReact.configs.flat['jsx-runtime'], // Add this if you are using React 17+
   pluginPrettier,
   {
-    ignores: ['src/generated/index.ts'],
+    ignores: ['/src/generated/index.ts'],
     rules: {
       'react/react-in-jsx-scope': 0,
       'prettier/prettier': 'error',

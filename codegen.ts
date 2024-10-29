@@ -11,6 +11,14 @@ const config: CodegenConfig = {
         'typescript-operations',
         'typescript-react-apollo',
       ],
+      config: {
+        scalars: {
+          DateTime: {
+            input: 'string', // this means our server can take CustomScalar as string
+            output: 'string', // this means our server will return CustomScalar as number
+          },
+        },
+      },
       hooks: {
         afterOneFileWrite: 'prettier --write',
       },

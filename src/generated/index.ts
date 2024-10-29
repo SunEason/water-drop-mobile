@@ -28,6 +28,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean }
   Int: { input: number; output: number }
   Float: { input: number; output: number }
+  DateTime: { input: string; output: string }
 }
 
 export type Mutation = {
@@ -63,13 +64,13 @@ export type QueryUserArgs = {
 export type User = {
   __typename?: 'User'
   account: Scalars['String']['output']
-  createTime: Scalars['String']['output']
+  createTime: Scalars['DateTime']['output']
   desc?: Maybe<Scalars['String']['output']>
   id: Scalars['String']['output']
   name: Scalars['String']['output']
   password: Scalars['String']['output']
   tel?: Maybe<Scalars['String']['output']>
-  updateTime: Scalars['String']['output']
+  updateTime: Scalars['DateTime']['output']
 }
 
 export type UserInput = {
