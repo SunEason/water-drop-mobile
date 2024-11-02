@@ -1,38 +1,28 @@
-import { Form, Input, Button } from 'antd-mobile'
-import { useGetUserQuery, useUpdateUserMutation, UserInput } from './generated'
-import { useEffect } from 'react'
+import { Form, Input, Button, Toast, ImageUploader } from 'antd-mobile'
+import { UserInput, useCreateUserMutation } from './generated'
+import { useUpload } from './hooks/upload'
 
 function App() {
-  const { data } = useGetUserQuery({
-    variables: {
-      id: 'e172dbc3-2221-401f-b3f5-7a62c3e8666e',
-    },
-  })
-  const [updateUser] = useUpdateUserMutation()
+  const { uploadHandler } = useUpload()
+
+  const [createUser] = useCreateUserMutation()
 
   const [form] = Form.useForm()
 
-  useEffect(() => {
-    form.setFieldsValue({
-      ...data?.user,
-    })
-  }, [data?.user])
-
   const onFinish = (values: UserInput) => {
-    updateUser({
+    createUser({
       variables: {
-        id: 'e172dbc3-2221-401f-b3f5-7a62c3e8666e',
         input: values,
       },
       onCompleted: () => {
-        // 获取最新的数据
-        // refetch()
+        Toast.show('创建成功')
       },
     })
   }
 
   return (
-    <>
+    <div>
+      <ImageUploader upload={uploadHandler} />
       <Form
         layout="horizontal"
         form={form}
@@ -71,7 +61,7 @@ function App() {
           <Input placeholder="请输入电话" />
         </Form.Item>
       </Form>
-    </>
+    </div>
   )
 }
 

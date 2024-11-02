@@ -30,6 +30,14 @@ export const GetUser = gql`
   }
 `
 
+export const CreateUser = gql`
+  mutation CreateUser($input: UserInput!) {
+    createUser(input: $input) {
+      id
+    }
+  }
+`
+
 export const UpdateUser = gql`
   mutation UpdateUser($id: String!, $input: UserInput!) {
     updateUser(id: $id, input: $input) {

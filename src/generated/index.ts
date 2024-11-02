@@ -51,8 +51,18 @@ export type MutationUpdateUserArgs = {
   input: UserInput
 }
 
+export type OssParams = {
+  __typename?: 'OSSParams'
+  accessId: Scalars['String']['output']
+  expire: Scalars['String']['output']
+  host: Scalars['String']['output']
+  policy: Scalars['String']['output']
+  signature: Scalars['String']['output']
+}
+
 export type Query = {
   __typename?: 'Query'
+  OSSInfo?: Maybe<OssParams>
   user?: Maybe<User>
   users?: Maybe<Array<User>>
 }
@@ -79,6 +89,20 @@ export type UserInput = {
   name: Scalars['String']['input']
   password: Scalars['String']['input']
   tel?: InputMaybe<Scalars['String']['input']>
+}
+
+export type GetOssInfoQueryVariables = Exact<{ [key: string]: never }>
+
+export type GetOssInfoQuery = {
+  __typename?: 'Query'
+  OSSInfo?: {
+    __typename?: 'OSSParams'
+    expire: string
+    policy: string
+    signature: string
+    accessId: string
+    host: string
+  } | null
 }
 
 export type GetUsersQueryVariables = Exact<{ [key: string]: never }>
@@ -117,6 +141,15 @@ export type GetUserQuery = {
   } | null
 }
 
+export type CreateUserMutationVariables = Exact<{
+  input: UserInput
+}>
+
+export type CreateUserMutation = {
+  __typename?: 'Mutation'
+  createUser?: { __typename?: 'User'; id: string } | null
+}
+
 export type UpdateUserMutationVariables = Exact<{
   id: Scalars['String']['input']
   input: UserInput
@@ -127,6 +160,85 @@ export type UpdateUserMutation = {
   updateUser?: { __typename?: 'User'; id: string } | null
 }
 
+export const GetOssInfoDocument = gql`
+  query GetOSSInfo {
+    OSSInfo {
+      expire
+      policy
+      signature
+      accessId
+      host
+    }
+  }
+`
+
+/**
+ * __useGetOssInfoQuery__
+ *
+ * To run a query within a React component, call `useGetOssInfoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOssInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOssInfoQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetOssInfoQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetOssInfoQuery,
+    GetOssInfoQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<GetOssInfoQuery, GetOssInfoQueryVariables>(
+    GetOssInfoDocument,
+    options,
+  )
+}
+export function useGetOssInfoLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetOssInfoQuery,
+    GetOssInfoQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<GetOssInfoQuery, GetOssInfoQueryVariables>(
+    GetOssInfoDocument,
+    options,
+  )
+}
+export function useGetOssInfoSuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        GetOssInfoQuery,
+        GetOssInfoQueryVariables
+      >,
+) {
+  const options =
+    baseOptions === Apollo.skipToken
+      ? baseOptions
+      : { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<GetOssInfoQuery, GetOssInfoQueryVariables>(
+    GetOssInfoDocument,
+    options,
+  )
+}
+export type GetOssInfoQueryHookResult = ReturnType<typeof useGetOssInfoQuery>
+export type GetOssInfoLazyQueryHookResult = ReturnType<
+  typeof useGetOssInfoLazyQuery
+>
+export type GetOssInfoSuspenseQueryHookResult = ReturnType<
+  typeof useGetOssInfoSuspenseQuery
+>
+export type GetOssInfoQueryResult = Apollo.QueryResult<
+  GetOssInfoQuery,
+  GetOssInfoQueryVariables
+>
 export const GetUsersDocument = gql`
   query GetUsers {
     users {
@@ -278,6 +390,55 @@ export type GetUserSuspenseQueryHookResult = ReturnType<
 export type GetUserQueryResult = Apollo.QueryResult<
   GetUserQuery,
   GetUserQueryVariables
+>
+export const CreateUserDocument = gql`
+  mutation CreateUser($input: UserInput!) {
+    createUser(input: $input) {
+      id
+    }
+  }
+`
+export type CreateUserMutationFn = Apollo.MutationFunction<
+  CreateUserMutation,
+  CreateUserMutationVariables
+>
+
+/**
+ * __useCreateUserMutation__
+ *
+ * To run a mutation, you first call `useCreateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createUserMutation, { data, loading, error }] = useCreateUserMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateUserMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateUserMutation,
+    CreateUserMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(
+    CreateUserDocument,
+    options,
+  )
+}
+export type CreateUserMutationHookResult = ReturnType<
+  typeof useCreateUserMutation
+>
+export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>
+export type CreateUserMutationOptions = Apollo.BaseMutationOptions<
+  CreateUserMutation,
+  CreateUserMutationVariables
 >
 export const UpdateUserDocument = gql`
   mutation UpdateUser($id: String!, $input: UserInput!) {
