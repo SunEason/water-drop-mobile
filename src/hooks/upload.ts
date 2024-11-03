@@ -14,7 +14,7 @@ export function useUpload() {
     formData.append('OSSAccessKeyId', data.OSSInfo.accessId)
     formData.append('success_action_status', '200')
     formData.append('signature', data.OSSInfo.signature)
-    formData.append('file', data.OSSInfo.signature)
+    formData.append('file', file)
 
     const res = await fetch(data.OSSInfo.host, {
       method: 'POST',
