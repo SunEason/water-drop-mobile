@@ -1,4 +1,3 @@
-// import { Toast } from 'antd-mobile'
 import { useGetOssInfoQuery } from '../generated'
 
 export function useUpload() {
@@ -20,6 +19,9 @@ export function useUpload() {
     const res = await fetch(data.OSSInfo.host, {
       method: 'POST',
       body: formData,
+      // headers: new Headers({
+      //   'Content-Type': file.type,
+      // }),
     })
     console.log(res)
     return {
